@@ -1,0 +1,24 @@
+---
+- name: Configure yum client
+  hosts: all
+  become: true
+  tasks:
+  - name: Configure BaseOS repo
+    ansible.builtin.yum_repository:
+      name: baseosrepo
+      description: BaseOS packages
+      file: baseos
+      baseurl: http://content.example.com/rhel9.0/x86_64/dvd/BaseOS
+      gpgcheck: yes
+  - name: Ensure RPM key is installed
+    ansible.builtin.rpm_key:
+      key: http://content.example.com/rhel9.0/x86_64/dvd/RPM-GPG-KEY-redhat-release
+      state: present
+  - name: Configure AppStream repo
+    ansible.builtin.yum_repository:
+      name: appstreamrepo
+      description: AppStream repo
+      file: appstream
+      baseurl: http://content.example.com/rhel9.0/x86_64/dvd/AppStream
+      gpgcheck: yes
+...

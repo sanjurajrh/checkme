@@ -1,0 +1,25 @@
+---
+- name: Install packages
+  hosts: all
+  become: true
+  vars:
+   packages:
+   - php
+   - mariadb
+  tasks:
+  - name: Install php and mariadb packages
+    ansible.builtin.yum:
+      name: "{{ packages }}"
+      state: present
+
+  - name: Install RPM Development Tools packages on group
+    ansible.builtin.yum:
+      name: "@RPM Development Tools"
+      state: installed
+    when: inventory_hostname in groups['dev']
+  - name: Updates all packages to the latest version
+    ansible.builtin.yum:
+      name: "*"
+      state: latest
+    when: inventory_hostname in groups['dev']
+...

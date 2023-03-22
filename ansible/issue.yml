@@ -1,0 +1,25 @@
+---
+- name: Modify the file content
+  hosts: all
+  become: true
+  tasks:
+  - name: Modify the content for dev host group
+    ansible.builtin.copy:
+      content: "Development"
+      dest: /etc/issue
+    when: inventory_hostname in groups['dev']
+
+
+  - name: Modify the content for test host group
+    ansible.builtin.copy:
+      content: "Test"
+      dest: /etc/issue
+    when: inventory_hostname in groups['test']
+
+
+  - name: Modify the content for prod host group
+    ansible.builtin.copy:
+      content: "Production"
+      dest: /etc/issue
+    when: inventory_hostname in groups['prod']
+...

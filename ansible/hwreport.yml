@@ -1,0 +1,60 @@
+---
+- name: Generate the hardware report
+  hosts: all
+  become: true
+  tasks:
+  - name: Download the template file
+    ansible.builtin.get_url:
+      url: http://bastion.lab.example.com/q12/hwreport.empty
+      dest: /root/hwreport.txt
+  - name: Update the inventory name in the report 
+    ansible.builtin.lineinfile:
+      path: /root/hwreport.txt
+      line: "HOST={{ inventory_hostname }}"
+      regex: ^HOST
+      state: present
+  - name: Update the memory information
+    ansible.builtin.lineinfile:
+      path: /root/hwreport.txt
+      line: "MEMORY={{ ansible_memtotal_mb }}"
+      regex: ^MEMORY
+      state: present
+  - name: Update the bios information
+    ansible.builtin.lineinfile:
+      path: /root/hwreport.txt
+      line: "BIOS={{ ansible_bios_version }}"
+      regex: ^BIOS
+      state: present
+
+  - name: Update the vda disk information
+    ansible.builtin.lineinfile:
+      path: /root/hwreport.txt
+      line: "DISK_SIZE_VDA={{ ansible_devices.vda.size }}"
+      regex: ^DISK_SIZE_VDA
+      state: present
+    when: ansible_devices.vda is defined
+  
+  - name: Update the vda disk information with NONE
+    ansible.builtin.lineinfile:
+      path: /root/hwreport.txt
+      line: "DISK_SIZE_VDA=NONE"
+      regex: ^DISK_SIZE_VDA
+      state: present
+    when: ansible_devices.vda is not defined
+
+  - name: Update the vdb disk information
+    ansible.builtin.lineinfile:
+      path: /root/hwreport.txt
+      line: "DISK_SIZE_VDB={{ ansible_devices.vdb.size }}"
+      regex: ^DISK_SIZE_VDB
+      state: present
+    when: ansible_devices.vdb is defined
+
+  - name: Update the vdb disk information with NONE
+    ansible.builtin.lineinfile:
+      path: /root/hwreport.txt
+      line: "DISK_SIZE_VDB=NONE"
+      regex: ^DISK_SIZE_VDB
+      state: present
+    when: ansible_devices.vdb is not defined
+...

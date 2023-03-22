@@ -1,0 +1,46 @@
+---
+- name: Create LVM
+  hosts: all
+  become: true
+  tasks:
+    - name: Check the volume group
+      ansible.builtin.debug:
+        msg: "Volume group does not exist"
+      when: "{{ ansible_devices.vdb.partitions is not defined }}"
+    - name: Create the logical volume using the research volume group
+      roles:
+        - name: redhat.rhel_system_roles.storage
+          storage_pools:
+            - name: research
+              type: lvm
+              disks: 
+                - /dev/vdb
+              volumes:
+                - name: data
+                  size: 1500m
+                  mount_point: "/data"
+                  fs_type: xfs
+                  state: present
+      when: 
+        - "{{ ansible_devices.vdb.partitions is defined }}"
+        - "{{ ansible_devices.vdb.partitions.vdb1.size == 1500 }}"
+    - name: Custom message
+      ansible.builtin.debug:
+        msg: Could not create logical volume of that size
+      when: "{{ ansible_devices.vdb.partitions.vdb1.size < 1500 }}"
+    - name: Create lv of 800M 
+      roles:
+        - name: redhat.rhel_system_roles.storage
+          storage_pools:
+            - name: research
+              type: lvm
+              disks: 
+                - /dev/vdb
+              volumes:
+                - name: data
+                  size: 800m
+                  mount_point: "/data"
+                  fs_type: xfs
+                  state: present
+      when: "{{ ansible_devices.vdb.partitions.vdb1.size < 1500 }}"
+...

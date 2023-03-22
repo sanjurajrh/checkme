@@ -1,0 +1,6 @@
+---
+- src: http://bastion.lab.example.com/q5/haproxy.tar
+  name: balancer
+
+- src: http://bastion.lab.example.com/q5/phpinfo.tar
+  name: phpinfo

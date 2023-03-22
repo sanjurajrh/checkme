@@ -1,0 +1,7 @@
+---
+- name: Use a RHEL system role
+  hosts: all
+  become: true
+  roles:
+    - redhat.rhel_system_roles.timesync
+...

@@ -1,0 +1,40 @@
+---
+- name: Create a web content directory
+  hosts: dev
+  become: true
+  tasks:
+  - name: Create the webdev group
+    ansible.builtin.group:
+      name: webdev
+      state: present
+  - name: Create the directory /webdev
+    ansible.builtin.file:
+      path: /webdev
+      state: directory
+      group: webdev
+      mode: '02775'
+      setype: httpd_sys_content_t
+  - name: Set the sym links
+    ansible.builtin.file:
+      src: /webdev
+      dest: /var/www/html/webdev
+      state: link
+  - name: Create the content to serve
+    ansible.builtin.copy:
+      content: "Development"
+      dest: /webdev/index.html
+      setype: httpd_sys_content_t
+  - name: Start and enable httpd service
+    ansible.builtin.service:
+      name: httpd
+      state: restarted
+      enabled: true
+  - name: Open the firewall ports
+    ansible.posix.firewalld:
+      service: http
+      immediate: true
+      permanent: true
+      state: enabled
+
+
+...

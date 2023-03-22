@@ -1,0 +1,34 @@
+---
+- name: Create the user accounts
+  hosts: all
+  become: true
+  vars_files:
+    - user_list.yml
+    - locker.yml
+  tasks:
+    - name: Create the group ansible 
+      loop:
+        - ansible
+        - opsmgr
+      ansible.builtin.group:
+        name: "{{ item }}"
+        state: present
+
+    - name: create user in test host group
+      loop: "{{ users }}"
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        groups: ansible
+        password: "{{ pw_developer | password_hash('sha512') }}"
+      when: inventory_hostname in groups['test'] and item.job == "developer"
+    
+    - name: create user in prod host group
+      loop: "{{ users }}"
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        groups: opsmgr
+        password: "{{ pw_manager | password_hash('sha512') }}"
+      when: inventory_hostname in groups['prod'] and item.job == "manager"
+    
+
+...

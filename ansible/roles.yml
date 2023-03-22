@@ -1,0 +1,10 @@
+---
+- name: Use roles from ansible galaxy for phpinfo 
+  hosts: webservers
+  roles:
+    - phpinfo
+- name: Use roles from ansible galaxy for balancer
+  hosts: balancers
+  roles:
+    - balancer
+...
