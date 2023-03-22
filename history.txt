@@ -1,0 +1,402 @@
+    1  sudo -i 
+    2  ls 
+    3  mkdir ansible 
+    4  vim ansible/inventory 
+    5  vim ansible/ansible.cfg
+    6  ansible-galaxy roles list 
+    7  ansible-galaxy list
+    8  vim ansible/ansible.cfg
+    9  mkdir ansible/roles
+   10  ansible --version  
+   11  cd ansible/
+   12  ansible --version  
+   13  ansible all --list-hosts 
+   14  ansible dev --list-hosts
+   15  ansible test --list-hosts
+   16  ansible prod --list-hosts
+   17  ansible balancers --list-hosts
+   18  ansible webservers --list-hosts
+   19  vim inventory 
+   20  ssh servera
+   21  ssh serverb
+   22  ssh serverc
+   23  ssh serverd
+   24  ssh workstation
+   25  cat /etc/yum.repos.d/rhel_dvd.repo 
+   26  echo 30*227000/100 | bc 
+   27  echo 22700-68100 | bc 
+   28  echo 227000-68100 | bc 
+   29  echo 35*227000/100 | bc 
+   30  echo 22700-79450 | bc 
+   31  echo 227000-79450 | bc 
+   32  ansible all -a 'ls -l /etc/yum.repos.d/' -u devops -b 
+   33  ansible all -m file -a 'path=/etc/yum.repos.d/rhel_dvd.repo state=absent' -u devops -b 
+   34  ansible all -a 'ls -l /etc/yum.repos.d/' -u devops -b 
+   35  vim yum_client.yml
+   36  podman login utility.lab.example.com
+   37  ansible-navigator images
+   38  podman  images 
+   39  ansible-navigator run yum_client.yml --eei utility.lab.example.com/ee-supported-rhel8 -m stdout --syntax-check 
+   40  ansible-navigator run yum_client.yml --eei utility.lab.example.com/ee-supported-rhel8 -m stdout
+   41  ansible all -a 'ls -l /etc/yum.repos.d/' -u devops -b 
+   42  ansible all -a 'yum repolist ' -u devops -b 
+   43  ansible all -a 'yum repolist --all' -u devops -b 
+   44  ansible all -a 'yum repolist' -u devops -b 
+   45  ls /etc/pki/rpm-gpg/
+   46  l -ltr /etc/pki/rpm-gpg/
+   47  ls -ltr /etc/pki/rpm-gpg/
+   48  date
+   49  cat yum_client
+   50  cat yum_client.yml 
+   51  vim yum_client.yml
+   52  ansible-navigator run yum_client.yml --eei utility.lab.example.com/ee-supported-rhel8 -m stdout
+   53  ansible all -a 'ls -l /etc/yum.repos.d/' -u devops -b 
+   54  ansible all -m file -a 'path=/etc/yum.repos.d/appstream.repo state=absent' -u devops -b 
+   55  ansible all -a 'ls -l /etc/yum.repos.d/' -u devops -b 
+   56  ansible all -m file -a 'path=/etc/yum.repos.d/baseos.repo state=absent' -u devops -b 
+   57  ls -ltr /etc/pki/rpm-gpg/
+   58  ls -ltr /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+   59  ansible all -m file -a 'path=/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release state=absent' -u devops -b 
+   60  ls -ltr /etc/pki/rpm-gpg/
+   61  ansible-navigator run yum_client.yml --eei utility.lab.example.com/ee-supported-rhel8 -m stdout
+   62  ansible all -a 'ls -l /etc/yum.repos.d/' -u devops -b 
+   63  ls -ltr /etc/pki/rpm-gpg/
+   64  ansible all -a 'ls -l /etc/pki/rpm-gpg/' -u devops -b 
+   65  cat yum_client
+   66  cat yum_client.yml 
+   67  find / -name "RPM-GPG-KEY-redhat-release" 2> /dev/null  
+   68  vim packages.yml
+   69  sudo yum grouplist 
+   70  vim packages.yml
+   71  ansible-navigator doc yum
+   72  vim packages.yml
+   73  ansible-navigator doc yum
+   74  ansible-doc yum
+   75  vim packages.yml
+   76  ansible-navigator run packages.yml --eei ee-supported-rhel8 -m stdout --syntax-check 
+   77  vim packages.yml
+   78  ansible-navigator run packages.yml --eei ee-supported-rhel8 -m stdout --syntax-check 
+   79  ansible-navigator run packages.yml --eei ee-supported-rhel8 -m stdout  
+   80  ansible all -a 'rpm -qa chrony' -u devops -b 
+   81  vim timesync.yml
+   82  sudo yum list rhel-system-roles 
+   83  rpm -ql rhel-system-roles 
+   84  cat /usr/share/doc/rhel-system-roles/timesync/README.md
+   85  vim timesync.yml
+   86  dig classroom.example.com 
+   87  vim timesync.yml
+   88  ansible-navigator run timesync.yml --eei ee-supported-rhel8 -m stdout --syntax-check 
+   89  ansible-galaxy roles list 
+   90  ansible-galaxy role list 
+   91  vim timesync.yml
+   92  ansible-navigator run timesync.yml --eei ee-supported-rhel8 -m stdout --syntax-check 
+   93  ls
+   94  vim ansible.cfg 
+   95  ansible-navigator run timesync.yml --eei ee-supported-rhel8 -m stdout --syntax-check 
+   96  ansible-galaxy collection list 
+   97  mkdir -p collections
+   98  ansible-galaxy collection list 
+   99  ansible-navigator run timesync.yml --eei ee-supported-rhel8 -m stdout --syntax-check 
+  100  vim setup.yml
+  101  ansible-doc  geturl
+  102  ansible-doc  get_url
+  103  vim setup.yml
+  104  ansible-navigator run setup.yml -eei ee-supported-rhel8 -m stdout 
+  105  ansible-navigator run setup.yml --eei ee-supported-rhel8 -m stdout 
+  106  vim setup.yml
+  107  ansible-navigator run setup.yml --eei ee-supported-rhel8 -m stdout 
+  108  wget https://github.com/sanjurajrh/ansible2023/blob/main/redhat-rhel_system_roles-1.19.3.tar.gz
+  109  ls
+  110  vim setup.yml 
+  111  ls
+  112  wget https://raw.githubusercontent.com/sanjurajrh/ansible2023/main/haproxy.tar
+  113  ls
+  114  wget https://raw.githubusercontent.com/sanjurajrh/ansible2023/main/phpinfo.tar
+  115  ls
+  116  rm -f *.json
+  117  ls
+  118   ls collections/
+  119  ansible-galaxy collection install -p collections/ redhat-rhel_system_roles-1.19.3.tar.gz 
+  120  ls
+  121  rm redhat-rhel_system_roles-1.19.3.tar.gz 
+  122  cd ..
+  123  ls
+  124  lab start role-system
+  125  ls
+  126  ls role-system/
+  127  cp role-system/redhat-rhel_system_roles-1.19.3.tar.gz /home/student/ansible/
+  128  cd /home/student/ansible/
+  129  ls 
+  130  ansible-galaxy collection install -p collections/ redhat-rhel_system_roles-1.19.3.tar.gz 
+  131  ls
+  132  rm -f redhat-rhel_system_roles-1.19.3.tar.gz 
+  133  wget https://github.com/sanjurajrh/ansible2023/blob/main/redhat-rhel_system_roles-1.19.3.tar.gz
+  134  ls -lh redhat-rhel_system_roles-1.19.3.tar.gz 
+  135  ls -l ../role-system/redhat-rhel_system_roles-1.19.3.tar.gz 
+  136  ls -lh ../role-system/redhat-rhel_system_roles-1.19.3.tar.gz 
+  137  ls
+  138  ls -lh *.tar
+  139  ansible-galaxy collection list 
+  140  cat timesync.yml 
+  141  ansible-navigator run timesync.yml --eei ee-supported-rhel8 -m stdout 
+  142  vim ansible.cfg 
+  143  vim timesync
+  144  vim timesync.yml 
+  145  ansible-galaxy collection list 
+  146  vim timesync.yml 
+  147  ansible-navigator run timesync.yml --eei ee-supported-rhel8 -m stdout 
+  148  ls
+  149  less timesync-artifact-2023-03-22T08\:57\:05.594058+00\:00.json 
+  150  ls
+  151  vim timesync.yml 
+  152  mkdir -p group_vars/all
+  153  vim group_vars/all/timesync.yml
+  154  cat group_vars/all/timesync.yml
+  155  cat timesync
+  156  cat timesync.yml 
+  157  ls
+  158  rm -f timesync*.json
+  159  ls
+  160  ansible-navigator run timesync.yml --eei ee-supported-rhel8 -m stdout 
+  161  ssh servera 
+  162  ansible-navigator run timesync.yml --eei ee-supported-rhel8 -m stdout 
+  163  ssh servera -l root 
+  164  ls
+  165  ssh bastion
+  166  rsync -av haproxy.tar root@bastion:/var/www/html/q5/
+  167  rsync -av phpinfo.tar root@bastion:/var/www/html/q5/
+  168  ls
+  169  cd roles/
+  170  vim requirements.yml
+  171  cat requirements.yml 
+  172  ansible-galaxy role install 
+  173  ansible-galaxy role --help
+  174  ansible-galaxy role install --help 
+  175  cd ..
+  176  ansible-galaxy role install -p roles/ -r roles/requirements.yml 
+  177  cat roles/requirements.yml 
+  178  vim roles/requirements.yml
+  179  ansible-galaxy role install -p roles/ -r roles/requirements.yml 
+  180  ansible-galaxy role list 
+  181  cd roles/
+  182  ansible-galaxy init apache 
+  183  ls
+  184  cd apache/
+  185  ls
+  186  vim tasks/main.yml 
+  187  vim templates/index.html.j2
+  188  cat templates/index.html.j2
+  189  ls
+  190  cd ..
+  191  ls
+  192  cd ..
+  193  ls
+  194  cat roles/apache/tests/test.yml 
+  195  cp roles/apache/tests/test.yml newrole.yml
+  196  vim newrole.yml
+  197  cat newrole.yml 
+  198  ansible-navigator run newrole.yml --eei ee-supported-rhel8 -m stdout 
+  199  curl serverc.lab.example.com 
+  200  curl serverd.lab.example.com 
+  201  vim roles.yml
+  202  cat roles.yml 
+  203  ansible-navigator run roles.yml -m stdout --eei ee-supported-rhel8 
+  204  ansible-galaxy role list 
+  205  cat roles/requirements.yml 
+  206  vim roles/requirements.yml
+  207  ansible-galaxy role install -p roles -r roles/requirements.yml 
+  208  ansible-galaxy role list 
+  209  ansible-navigator run roles.yml -m stdout --eei ee-supported-rhel8 
+  210  curl http://workstation.lab.example.com 
+  211  curl http://workstation.lab.example.com/hello.php | head 
+  212  curl -s http://workstation.lab.example.com/hello.php | head 
+  213  curl -s http://workstation.lab.example.com/hello.php | grep titile 
+  214  curl -s http://workstation.lab.example.com/hello.php | grep title
+  215  curl -s http://workstation.lab.example.com/hello.php | grep -C2 title
+  216  curl -s http://workstation.lab.example.com/hello.php 
+  217  curl -s http://workstation.lab.example.com/hello.php  | head 
+  218  ls
+  219  cat hosts.j2
+  220  vim hosts.j2
+  221  cat hosts.j2
+  222  vim hosts.j2 
+  223  vim hosts.yml
+  224  vim hosts.yml 
+  225  ansible-navigator run hosts.yml --eei ee-supported-rhel8 -m stdout 
+  226  vim hosts.yml 
+  227  ansible-navigator run hosts.yml --eei ee-supported-rhel8 -m stdout 
+  228  vim hosts.j2 
+  229  ansible-navigator run hosts.yml --eei ee-supported-rhel8 -m stdout 
+  230  ansible all -a 'cat /etc/issue' -u devops -b 
+  231  vim issue.yml
+  232  ansible-navigator run issue.yml --eei ee-supported-rhel8 -m stdout 
+  233  ansible all -a 'cat /etc/issue' -u devops -b 
+  234  vim webcontent.yml
+  235  ssh servera 
+  236  ssh servera  -l root 
+  237  vim webcontent.yml 
+  238  ansible-navigator run  --eei ee-supported-rhel8 -m stdout 
+  239  ansible-navigator run  webcontent.yml --eei ee-supported-rhel8 -m stdout 
+  240  curl -sL http://servera.lab.example.com/webdev/
+  241  curl -L http://servera.lab.example.com/webdev/
+  242  vim webcontent
+  243  vim webcontent.yml 
+  244  ansible-navigator run  webcontent.yml --eei ee-supported-rhel8 -m stdout 
+  245  curl -L http://servera.lab.example.com/webdev/
+  246  ls
+  247  history | grep rsync
+  248  ls
+  249  vim hwreport.yml
+  250  ansible-doc lineinfile
+  251  vim hwreport.yml
+  252  ansible-navigator run hwreport.yml -m stdout --eei ee-supported-rhel8 
+  253  vim inventory 
+  254  ansible all --list-hosts
+  255  ansible-navigator run hwreport.yml -m stdout --eei ee-supported-rhel8 
+  256  ansible serverc -a 'cat /root/hwreport.txt' -u devops -b 
+  257  ansible serverc -m setup | grep memory 
+  258  ansible serverc -m setup | grep mem
+  259  vim hwreport.yml
+  260  ansible-navigator run hwreport.yml -m stdout --eei ee-supported-rhel8 
+  261  vim hwreport.yml
+  262  ansible-navigator run hwreport.yml -m stdout --eei ee-supported-rhel8 
+  263  vim hwreport.yml
+  264  ansible-navigator run hwreport.yml -m stdout --eei ee-supported-rhel8 
+  265  ansible serverc -a 'cat /root/hwreport.txt' -u devops -b 
+  266  vim hwreport.yml
+  267  ansible serverc -m setup | grep bios
+  268  vim hwreport.yml
+  269  ansible-navigator run hwreport.yml -m stdout --eei ee-supported-rhel8 
+  270  ansible serverc -m setup | grep bios
+  271  ansible serverc -a 'cat /root/hwreport.txt' -u devops -b 
+  272  ansible serverc -m setup | grep devices
+  273  ansible serverc -m setup | grep devices -C3 
+  274  ansible serverc -m setup | grep devices -C10
+  275  ansible serverc -m setup | grep devices -C20
+  276  ansible serverc -m setup | grep devices -C30
+  277  ansible serverc -m setup | grep devices -C50
+  278  ansible serverc -m setup | grep devices -A50
+  279  ansible serverc -m setup | grep devices -A70
+  280  ansible serverc -m setup | grep devices -A90
+  281  ansible serverc -m setup | grep devices -A100
+  282  vim hwreport.yml
+  283  ansible-navigator run hwreport.yml -m stdout --eei ee-supported-rhel8 
+  284  ansible serverc -a 'cat /root/hwreport.txt' -u devops -b 
+  285  ansible serverc -a 'lsblk' -u devops -b 
+  286  vim hwreport.yml
+  287  ansible-navigator run hwreport.yml -m stdout --eei ee-supported-rhel8 
+  288  ansible all -a 'cat /root/hwreport.txt' -u devops -b 
+  289  ansible-vault create locker.yml
+  290  cat locker.yml 
+  291  ansible-vault view locker.yml 
+  292  vim secret.txt
+  293  chmod 600 secret.txt 
+  294  ansible-vault view locker.yml --vault-password-file=secret.txt
+  295  vim user_list.yml
+  296  vim users.yml
+  297  ansible-navigator run users.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact=false 
+  298  ansible-navigator run users.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false 
+  299  ansible-navigator run users.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false --ask-vault-pass
+  300  vim users.yml
+  301  ansible-navigator run users.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false --ask-vault-pass
+  302  vim users.yml
+  303  ansible-navigator run users.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false --ask-vault-pass
+  304  vim users.yml
+  305  ansible-vault view locker.yml --vault-password-file=secret.txt
+  306  ansible-vault edit locker.yml --vault-password-file=secret.txt
+  307  ansible-vault view locker.yml --vault-password-file=secret.txt
+  308  ansible-navigator run users.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false --ask-vault-pass
+  309  vim users.yml
+  310  ansible-navigator run users.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false --ask-vault-pass
+  311  ansible-navigator run users.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false --vault-password-file=secret.txt
+  312  ansible all -a 'id fred' 
+  313  ansible all -a 'id sally' 
+  314  ansible all -a 'id bob' 
+  315  vim ansible.cfg 
+  316  cat /etc/ansible/ansible.cfg 
+  317  cd
+  318  cd /tmp/
+  319  ansible-config init --disabled > ansible.cfg
+  320  vim ansible.cfg 
+  321  grep vault ansible.cfg
+  322  cd -
+  323  cd ansible/
+  324  vim ansible.cfg 
+  325  ansible-navigator run users.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false 
+  326  ls
+  327  ansible-vault create salaries.yml
+  328  ansible-vault create salaries.yml --help
+  329  ansible-vault create salaries.yml --ask-vault-password
+  330  ansible-vault create salaries.yml --ask-vault-password --encrypt-vault-id rekey
+  331  ansible-vault create salaries.yml --ask-vault-password --encrypt-vault-id=default
+  332  ls
+  333  car salaries.yml 
+  334  cat salaries.yml
+  335  ansible-vault view salaries.yml 
+  336  ansible-vault edit salaries.yml 
+  337  ansible-vault rekey salaries.yml 
+  338  ansible-vault view salaries.yml 
+  339  ansible-vault view salaries.yml --ask-vault-pass
+  340  vim newvault
+  341  chmod 600 newvault
+  342  ansible-vault rekey salaries.yml --new-vault-password-file=newvault
+  343  ansible-vault view salaries.yml --ask-vault-pass
+  344  ansible-navigator run users.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false 
+  345  cat ansible.cfg 
+  346  vgs
+  347  sudo vgs
+  348  ansible all -a 'vgs' 
+  349  ansible all -a 'vgs'  -u devops -b 
+  350  vim lv.yml
+  351  ansible serverc -m setup 
+  352  ansible serverc -m setup  | grep -i lvm -C2 
+  353  ansible serverc -m setup  | grep -i ansible_lvm -C2 
+  354  ansible serverc -m setup  | grep -i ansible_lv
+  355  ansible serverc -m setup 
+  356  ansible serverc -m setup  | less
+  357  vim lv.yml 
+  358  ansible serverc -m setup  | less
+  359  vim lv.yml 
+  360  ansible serverc -m setup  | less
+  361  vim lv.yml 
+  362  ansible-navigator run lv.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false 
+  363  vim lv.yml 
+  364  ansible-navigator run lv.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false 
+  365  vim lv.yml 
+  366  ansible-navigator run lv.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false 
+  367  vim lv.yml 
+  368  ansible-navigator run lv.yml -m stdout --eei ee-supported-rhel8 --playbook-artifact-enable false 
+  369  vim lv.yml 
+  370  ls
+  371  rm -rf hwreport-artifact-2023-03-22T10\:*
+  372  ls
+  373  rm -f issue-artifact-2023-03-22T09\:39\:28.612706+00\:00.json 
+  374  ls
+  375  rm -f hosts-artifact-2023-03-22T09\:3
+  376  rm -f hosts-artifact-2023-03-22T09\:3*
+  377  ls
+  378  rm -f newrole-artifact-2023-03-22T09\:20\:12.625551+00\:00.json 
+  379  ls
+  380  rm -f roles-artifact-2023-03-22T09\:2*
+  381  ls
+  382  rm -f timesync-artifact-2023-03-22T09\:03\:12.814517+00\:00.json 
+  383  rm -f webcontent-artifact-2023-03-22T10\:0*
+  384  ls
+  385  pwd
+  386  cd ..
+  387  ks
+  388  ls
+  389  git clone https://github.com/sanjurajrh/checkme.git
+  390  ls 
+  391  cd checkme/
+  392  ls
+  393  rsync -av  ../ansible . 
+  394  ls
+  395  ls ansible/
+  396  git add .
+  397  git commit -m "initial pr"
+  398  git push 
+  399  cd - 
+  400  cd ansible/
+  401  ls
+  402  history > ../checkme/history.txt
