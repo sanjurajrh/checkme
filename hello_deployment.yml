@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hello
+  name: hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - image: registry.ocp4.example.com:8443/redhattraining/hello-world-nginx:v1.0
+        name: hello-world-nginx
+        ports:
+        - containerPort: 8080
+          protocol: TCP
