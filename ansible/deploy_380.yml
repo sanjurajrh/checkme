@@ -1,0 +1,78 @@
+---
+- name: Access the OCP cluster
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+    - name: Get the token 
+      redhat.openshift.openshift_auth:
+        username: kubeadmin
+        password: HHTKq-zLFIR-NDeUp-zP5wi
+        host: https://api.ocp4.example.com:6443
+        ca_cert: /etc/pki/tls/certs/ca-bundle.crt
+      register: auth_results
+- name: Deploy the app on OCP
+  hosts: localhost
+  become: false
+  gather_facts: false
+  vars:
+    project: automation-ansible
+  module_defaults:
+    group/redhat.openshift.openshift:
+      host: https://api.ocp4.example.com:6443
+      api_key: "{{ auth_results['openshift_auth']['api_key'] }}"
+      ca_cert: /etc/pki/tls/certs/ca-bundle.crt
+      namespace: "{{ project }}"
+    group/kubernetes.core.k8s:
+      host: https://api.ocp4.example.com:6443
+      api_key: "{{ auth_results['openshift_auth']['api_key'] }}"
+      ca_cert: /etc/pki/tls/certs/ca-bundle.crt
+      namespace: "{{ project }}"
+  tasks:
+    - name: Create the project 
+      redhat.openshift.k8s:
+        state: present
+        resource_definition:
+          apiVersion: project.openshift.io/v1
+          kind: Project
+          metadata:
+            name: "{{ project }}"
+
+    - name: Create the serviceaccount 
+      redhat.openshift.k8s:
+        state: present
+        src: "{{ playbook_dir + '/hello_serviceaccount.yml' }}"
+
+    - name: Deploy app
+      redhat.openshift.k8s:
+        state: present
+        src: "{{ playbook_dir + '/hello_deployment.yml' }}"
+
+    - name: Create the service
+      redhat.openshift.k8s:
+        state: present
+        src: "{{ playbook_dir + '/hello_service.yml' }}"
+
+    - name: Create the route
+      redhat.openshift.k8s:
+        state: present
+        src: "{{ playbook_dir + '/hello_route.yml' }}"
+
+
+    - name: Check the route
+      redhat.openshift.openshift_route:
+        service: hello
+      register: route
+
+    - name: Access the route
+      uri:
+        url: "http://{{ route['result']['spec']['host'] }}"
+        return_content: yes
+      register: response
+      until: response['status'] == 200
+      retries: 10
+      delay: 5
+
+    - name: Display the response
+      debug:
+        var: response.content
