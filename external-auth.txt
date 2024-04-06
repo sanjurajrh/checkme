@@ -1,0 +1,5 @@
+utility.lab.example.com 
+http://utility.lab.example.com/ipa/config/ca.crt
+uid=rhvadmin,cn=users,cn=accounts,dc=lab,dc=example,dc=com
+lab.example.com 
+

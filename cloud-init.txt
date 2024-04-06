@@ -1,0 +1,4 @@
+write_files:
+  - path: /etc/motd
+    content: |
+      This VM has been provisioned using cloud-init.
