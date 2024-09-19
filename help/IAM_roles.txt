@@ -1,0 +1,71 @@
+[student@workstation rosa-iam-policies]$ rosa create account-roles --mode manual --classic --version 4.15 --prefix cs220$SUFFIX 
+I: Logged in as 'lws_sanjuraj' on 'https://api.openshift.com'
+I: Validating AWS credentials...
+I: AWS credentials are valid!
+I: Validating AWS quota...
+I: AWS quota ok. If cluster installation fails, validate actual AWS resource usage against https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.html
+I: Verifying whether OpenShift command-line tool is available...
+I: Current OpenShift Client Version: 4.12.0
+I: Creating account roles
+I: Run the following commands to create the classic account roles and policies:
+
+aws iam create-role \
+	--assume-role-policy-document file://sts_installer_trust_policy.json \
+	--role-name cs220saraj-Installer-Role \
+	--tags Key=red-hat-managed,Value=true Key=rosa_role_type,Value=installer Key=rosa_openshift_version,Value=4.15 Key=rosa_role_prefix,Value=cs220saraj
+
+aws iam create-policy \
+	--policy-document file://sts_installer_permission_policy.json \
+	--policy-name cs220saraj-Installer-Role-Policy \
+	--tags Key=red-hat-managed,Value=true Key=rosa_role_type,Value=installer Key=rosa_openshift_version,Value=4.15 Key=rosa_role_prefix,Value=cs220saraj
+
+aws iam attach-role-policy \
+	--policy-arn arn:aws:iam::103552497924:policy/cs220saraj-Installer-Role-Policy \
+	--role-name cs220saraj-Installer-Role
+
+aws iam create-role \
+	--assume-role-policy-document file://sts_instance_controlplane_trust_policy.json \
+	--role-name cs220saraj-ControlPlane-Role \
+	--tags Key=red-hat-managed,Value=true Key=rosa_openshift_version,Value=4.15 Key=rosa_role_prefix,Value=cs220saraj Key=rosa_role_type,Value=instance_controlplane
+
+aws iam create-policy \
+	--policy-document file://sts_instance_controlplane_permission_policy.json \
+	--policy-name cs220saraj-ControlPlane-Role-Policy \
+	--tags Key=red-hat-managed,Value=true Key=rosa_openshift_version,Value=4.15 Key=rosa_role_prefix,Value=cs220saraj Key=rosa_role_type,Value=instance_controlplane
+
+aws iam attach-role-policy \
+	--policy-arn arn:aws:iam::103552497924:policy/cs220saraj-ControlPlane-Role-Policy \
+	--role-name cs220saraj-ControlPlane-Role
+
+aws iam create-role \
+	--assume-role-policy-document file://sts_instance_worker_trust_policy.json \
+	--role-name cs220saraj-Worker-Role \
+	--tags Key=red-hat-managed,Value=true Key=rosa_openshift_version,Value=4.15 Key=rosa_role_prefix,Value=cs220saraj Key=rosa_role_type,Value=instance_worker
+
+aws iam create-policy \
+	--policy-document file://sts_instance_worker_permission_policy.json \
+	--policy-name cs220saraj-Worker-Role-Policy \
+	--tags Key=red-hat-managed,Value=true Key=rosa_openshift_version,Value=4.15 Key=rosa_role_prefix,Value=cs220saraj Key=rosa_role_type,Value=instance_worker
+
+aws iam attach-role-policy \
+	--policy-arn arn:aws:iam::103552497924:policy/cs220saraj-Worker-Role-Policy \
+	--role-name cs220saraj-Worker-Role
+
+aws iam create-role \
+	--assume-role-policy-document file://sts_support_trust_policy.json \
+	--role-name cs220saraj-Support-Role \
+	--tags Key=red-hat-managed,Value=true Key=rosa_role_type,Value=support Key=rosa_openshift_version,Value=4.15 Key=rosa_role_prefix,Value=cs220saraj
+
+aws iam create-policy \
+	--policy-document file://sts_support_permission_policy.json \
+	--policy-name cs220saraj-Support-Role-Policy \
+	--tags Key=red-hat-managed,Value=true Key=rosa_role_type,Value=support Key=rosa_openshift_version,Value=4.15 Key=rosa_role_prefix,Value=cs220saraj
+
+aws iam attach-role-policy \
+	--policy-arn arn:aws:iam::103552497924:policy/cs220saraj-Support-Role-Policy \
+	--role-name cs220saraj-Support-Role
+
+I: All policy files saved to the current directory
+[student@workstation rosa-iam-policies]$ 
+[student@workstation rosa-iam-policies]$ 
+

@@ -1,0 +1,46 @@
+I: This command will create a S3 bucket populating it with documents to be compliant with OIDC protocol. It will also create a Secret in Secrets Manager containing the private key
+aws s3api create-bucket \
+	--bucket cs220saraj-oidc-q6d4 \
+	--create-bucket-configuration LocationConstraint=us-east-2 \
+	--region us-east-2
+
+aws s3api put-bucket-tagging \
+	--bucket cs220saraj-oidc-q6d4 \
+	--tagging 'TagSet=[{Key=red-hat-managed,Value=true}]'
+
+aws s3api put-public-access-block \
+	--bucket cs220saraj-oidc-q6d4 \
+	--public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=false,RestrictPublicBuckets=false
+
+aws s3api put-bucket-policy \
+	--bucket cs220saraj-oidc-q6d4 \
+	--policy file://readOnlyPolicy-cs220saraj-oidc-q6d4.json
+
+rm readOnlyPolicy-cs220saraj-oidc-q6d4.json
+
+aws s3api put-object \
+	--body ./discovery-document-cs220saraj-oidc-q6d4.json \
+	--bucket cs220saraj-oidc-q6d4 \
+	--key .well-known/openid-configuration \
+	--tagging 'red-hat-managed=true'
+
+rm discovery-document-cs220saraj-oidc-q6d4.json
+
+aws s3api put-object \
+	--body ./jwks-cs220saraj-oidc-q6d4.json \
+	--bucket cs220saraj-oidc-q6d4 \
+	--key keys.json \
+	--tagging 'red-hat-managed=true'
+
+rm jwks-cs220saraj-oidc-q6d4.json
+
+aws secretsmanager create-secret \
+	--description "Secret for cs220saraj-oidc-q6d4" \
+	--name rosa-private-key-cs220saraj-oidc-q6d4 \
+	--region us-east-2 \
+	--secret-string file://rosa-private-key-cs220saraj-oidc-q6d4.key \
+	--tags Key=red-hat-managed,Value=true
+
+rm rosa-private-key-cs220saraj-oidc-q6d4.key
+I: Please run commands above to generate OIDC compliant configuration in your AWS account. To register this OIDC Configuration, please run the following command:
+rosa register oidc-config
